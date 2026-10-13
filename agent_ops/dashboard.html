@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AgentOps Reference — Frank Yip</title>
+  <style>
+    :root{--bg:#f5f7fa;--paper:#fff;--ink:#142235;--sub:#67768a;--line:#e5ebf2;--teal:#0b7e76;--navy:#152438;--soft:#eaf7f5;--amber:#a96a16;--red:#b74339}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}a{color:inherit}
+    .top{background:var(--navy);color:white;padding:21px 0}.wrap{max-width:1160px;padding:0 28px;margin:0 auto}
+    .top .flex{display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-size:17px;font-weight:790;letter-spacing:-.4px}.brand b{color:#78e5d4}.top small{color:#adc0cf;font-weight:600}.top .pill{background:#244153;border:1px solid #3b596a;color:#baf5ed;border-radius:999px;padding:5px 11px;font-size:12px}
+    .hero{padding:49px 0 30px}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--teal);text-transform:uppercase;font-size:12px;font-weight:800;letter-spacing:1.15px}.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:#21aa95}
+    h1{font-size:clamp(33px,4.5vw,53px);line-height:1.09;letter-spacing:-2px;max-width:790px;margin:14px 0 15px}p{margin:0}.lead{max-width:870px;color:var(--sub);font-size:17px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 26px}.stat,.card{border:1px solid var(--line);background:var(--paper);border-radius:17px}.stat{padding:20px 22px}.stat b{display:block;font-size:22px;letter-spacing:-.5px}.stat span{font-size:12px;color:var(--sub);font-weight:650}.stat b.small{font-size:17px}
+    .grid{display:grid;grid-template-columns:345px 1fr;gap:18px;align-items:start;padding-bottom:36px}.card{padding:23px;box-shadow:0 9px 28px rgba(15,23,42,.025)}.card h2{font-size:18px;letter-spacing:-.4px;margin:0 0 5px}.card .hint{color:var(--sub);font-size:13px;margin-bottom:18px}
+    .case-btn{width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;text-align:left;margin:0 0 9px;padding:12px 13px;cursor:pointer;transition:.15s}.case-btn:hover{border-color:#8acdc2;transform:translateY(-1px)}.case-btn.active{background:var(--soft);border-color:#4ab3a5;box-shadow:0 0 0 1px #4ab3a5}.case-btn b{display:block;font-size:13px}.case-btn span{color:var(--sub);font-size:12px;display:block;margin-top:3px}
+    .button{border:0;border-radius:10px;background:var(--navy);color:white;padding:12px 15px;font-weight:750;cursor:pointer;font-size:13px}.button:hover{background:#2b455e}.button.green{background:var(--teal)}.button.green:hover{background:#096c64}.button:disabled{opacity:.5;cursor:not-allowed}.button.ghost{background:#f0f4f8;color:var(--ink);border:1px solid var(--line)}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}.divider{height:1px;background:var(--line);margin:22px 0}.kicker{font-size:11px;letter-spacing:1px;font-weight:850;color:var(--sub);text-transform:uppercase;margin-bottom:9px}
+    .runtime{display:flex;align-items:center;gap:9px;color:#496477;font-size:13px;margin-bottom:18px}.runtime i{width:8px;height:8px;border-radius:50%;background:#19a686}.banner{padding:12px 15px;background:#eaf7f5;border:1px solid #c7e9e1;color:#1b625b;border-radius:10px;font-size:12px;margin:12px 0 0}
+    .output{background:#111f31;color:#e6eef6;border-radius:14px;padding:20px;margin-top:16px;min-height:172px;overflow:auto}.output pre{white-space:pre-wrap;word-break:break-word;margin:0;font:12px/1.65 'SFMono-Regular',Consolas,monospace}.action-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px}.info{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:14px}.info span{font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.7px;font-weight:750;display:block}.info strong{font-size:14px;display:block;margin-top:4px}.badge{display:inline-block;border-radius:6px;padding:2px 7px;font-size:12px;font-weight:800}.badge.high{color:var(--red);background:#fcece9}.badge.medium{color:var(--amber);background:#fff4db}.badge.low{color:var(--teal);background:#e8f6f3}
+    .result-text{font-size:14px;margin:15px 0}.approval{display:none;background:#fffaf0;border:1px solid #f2dcb1;border-radius:12px;padding:15px;margin-top:15px}.approval.visible{display:block}.approval p{color:#6c5532;font-size:12px;margin-bottom:10px}.audit-list{list-style:none;margin:0;padding:0;font-size:13px}.audit-list li{padding:11px 0;border-bottom:1px solid var(--line)}.audit-list li:last-child{border:0}.audit-list small{display:block;color:var(--sub)}
+    footer{padding:15px 0 38px;color:var(--sub);font-size:12px}.notice{border-left:3px solid #59baad;padding-left:13px;margin-top:18px;color:var(--sub);font-size:12px}.footflex{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.footflex b{color:var(--ink)}
+    @media(max-width:850px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.wrap{padding:0 18px}}@media(max-width:500px){.stats{grid-template-columns:1fr}.top small{display:none}.action-summary{grid-template-columns:1fr}h1{letter-spacing:-1px}}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap flex"><div class="brand">FRANK YIP <b> / AgentOps Reference</b></div><small>AI SYSTEMS ENGINEERING · PORTFOLIO DEMO</small><span class="pill">Synthetic data · Local only</span></div></header>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">A transparent, inspectable engineering demo</div>
+      <h1>Operational agents should earn the right to act.</h1>
+      <p class="lead">A local-first order-exception workflow demonstrating evidence retrieval, constrained planning, policy evaluation, idempotency, human review and audit trails. Built independently with synthetic scenarios. <strong>No messages, payments or orders are ever changed.</strong></p>
+      <div class="stats">
+        <div class="stat"><b>5 scenarios</b><span>Shipping · artwork · no-action · address · billing</span></div>
+        <div class="stat"><b class="small">Policy > Model</b><span>Optional LLM cannot bypass deterministic safety rules</span></div>
+        <div class="stat"><b class="small">0 external writes</b><span>Draft and approval-state simulation only</span></div>
+      </div>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>01 / Choose a scenario</h2><p class="hint">Select a synthetic customer request, then run the agent.</p>
+        <div id="cases"></div>
+        <div class="controls"><button class="button green" id="run">Run agent</button><button class="button ghost" id="rerun">Replay same key</button></div>
+        <div class="notice">Replay uses the same idempotency key; the same persisted action is returned, rather than executing a second workflow.</div>
+        <div class="divider"></div>
+        <h2>03 / Offline evaluation</h2><p class="hint">Five fixed golden scenarios, not a claim of LLM accuracy.</p>
+        <div class="runtime"><i></i><span id="evaluation">Loading evaluation...</span></div>
+        <button class="button ghost" id="evaluate">Rerun evaluation</button>
+      </section>
+      <section class="card">
+        <h2>02 / Trace the decision</h2>
+        <p class="hint">Observe the evidence, proposed response, safety gate and append-only audit events.</p>
+        <div class="runtime"><i></i><span id="runtime">Ready. Planner: deterministic baseline (no AI API required).</span></div>
+        <div class="action-summary">
+          <div class="info"><span>Intent</span><strong id="intent">Not run</strong></div>
+          <div class="info"><span>Review status</span><strong id="status">Not run</strong></div>
+          <div class="info"><span>Risk level</span><strong id="risk">—</strong></div>
+          <div class="info"><span>Read-only tools</span><strong id="tools">—</strong></div>
+        </div>
+        <p class="result-text" id="recommendation">Select a scenario and click Run agent.</p>
+        <div id="approval" class="approval">
+          <strong>Human-in-the-loop gate</strong><p>Review approval changes local state only. It never triggers a refund, address edit or customer message. X-Demo-Role is only a simulated role, not production authentication.</p>
+          <div class="controls"><button class="button green" id="approve">Approve for manual handling</button><button class="button ghost" id="reject">Reject</button></div>
+        </div>
+        <div class="divider"></div>
+        <div class="kicker">Evidence / read-only tool output</div>
+        <div class="output"><pre id="trace">Awaiting a scenario run...</pre></div>
+        <div class="divider"></div>
+        <div class="kicker">Audit history</div>
+        <ul id="audit" class="audit-list"><li>Nothing recorded yet.</li></ul>
+        <div class="banner">Demo boundary: optional real model planning requires explicit API configuration. Without it, results are generated by a labelled deterministic planner and tested policy rules.</div>
+      </section>
+    </div>
+  </main>
+  <footer class="wrap"><div class="footflex"><span>Frank Yip · Independent reference implementation · No affiliation with Sticker Mule</span><b>SAFE BY DESIGN. HONEST ABOUT LIMITATIONS.</b></div></footer>
+  <script>
+    const $=id=>document.getElementById(id);
+    let selected='SYN-1001', idempotencyKey='', lastAction=null;
+    function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    async function request(url,options={}) {const r=await fetch(url,options);const j=await r.json();if(!r.ok) throw Error(j.detail||('HTTP '+r.status));return j;}
+    async function init(){try{const cases=await request('/api/cases');$('cases').innerHTML=cases.map((c,i)=>`<button class="case-btn ${i===0?'active':''}" data-id="${c.case_id}"><b>${escapeHtml(c.case_id)} · ${escapeHtml(c.title)}</b><span>${escapeHtml(c.request)}</span></button>`).join('');document.querySelectorAll('.case-btn').forEach(el=>el.addEventListener('click',()=>{selected=el.dataset.id;idempotencyKey='';lastAction=null;$('approval').classList.remove('visible');document.querySelectorAll('.case-btn').forEach(b=>b.classList.toggle('active',b===el));}));await doEval();}catch(e){$('runtime').textContent=e.message;}}
+    async function doEval(){try{const e=await request('/api/evaluation');$('evaluation').textContent=`${e.passed}/${e.total} golden cases pass · offline policy baseline`;}catch(e){$('evaluation').textContent=e.message;}}
+    function setText(id,value){$(id).textContent=value;}
+    async function run(replay=false){try{
+      $('run').disabled=true;$('rerun').disabled=true;
+      if(!replay || !idempotencyKey)idempotencyKey='demo-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+      const a=await request('/api/cases/'+selected+'/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({idempotency_key:idempotencyKey})});lastAction=a;
+      setText('runtime',`Planner: ${a.planner} · ${a.reused?'same idempotency key replayed':'new action persisted'}`);
+      setText('intent',a.intent.replaceAll('_',' '));setText('status',a.status.replaceAll('_',' '));
+      $('risk').innerHTML=`<span class="badge ${escapeHtml(a.risk)}">${escapeHtml(a.risk.toUpperCase())}</span>`;
+      setText('tools',a.tool_calls.join(', '));setText('recommendation',a.recommendation);
+      setText('trace',JSON.stringify({action_id:a.action_id,case_id:a.case_id,tool_calls:a.tool_calls,evidence:a.evidence,planner:a.planner,reused:a.reused},null,2));
+      $('approval').classList.toggle('visible',a.status==='pending_review');await loadAudit(a.action_id);
+    }catch(e){setText('runtime','Error: '+e.message);}finally{$('run').disabled=false;$('rerun').disabled=false;}}
+    async function loadAudit(id){const events=await request('/api/actions/'+id+'/audit');$('audit').innerHTML=events.map(e=>`<li><strong>${escapeHtml(e.event_type)}</strong> <span>· ${escapeHtml(e.actor_role)}</span><small>${escapeHtml(e.created_at)} · ${escapeHtml(e.note||'no note')}</small></li>`).join('')||'<li>No events</li>';}
+    async function review(decision){if(!lastAction) return;try{const a=await request('/api/actions/'+lastAction.action_id+'/decision',{method:'POST',headers:{'Content-Type':'application/json','X-Demo-Role':'reviewer'},body:JSON.stringify({decision,note:'Human decision recorded in local demonstration.'})});setText('status',a.status.replaceAll('_',' '));$('approval').classList.remove('visible');await loadAudit(a.action_id);}catch(e){setText('runtime','Review error: '+e.message);}}
+    $('run').addEventListener('click',()=>run(false));$('rerun').addEventListener('click',()=>run(true));$('approve').addEventListener('click',()=>review('approve'));$('reject').addEventListener('click',()=>review('reject'));$('evaluate').addEventListener('click',doEval);init();
+  </script>
+</body></html>
